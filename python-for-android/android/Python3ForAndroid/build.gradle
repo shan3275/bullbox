@@ -1,0 +1,62 @@
+task genURL << {
+    def root = System.getProperty("user.dir")
+    exec {
+        executable "dir"
+        args "${root}/../../tools/gitbase.py", "${root}"
+    }
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.3'
+    }
+}
+
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile project(':Common')
+    compile project(':InterpreterForAndroid')
+    compile project(':PythonCommon')
+    compile('com.android.support:support-v4:21.0.3'){
+        force = true
+    }
+}
+
+android {
+    buildToolsVersion "21.1.2"
+    compileSdkVersion 21
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+        }
+
+        instrumentTest.setRoot('tests')
+
+    }
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 9
+    }
+    productFlavors {
+    }
+    dexOptions {
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_6
+        targetCompatibility JavaVersion.VERSION_1_6
+    }
+}
+
+//preBuild.dependsOn genURL

@@ -1,0 +1,1 @@
+../../python-build/python-scripts/test.py

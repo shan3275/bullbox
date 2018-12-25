@@ -1,0 +1,32 @@
+diff -ur host-src/Makefile.pre.in python-src_arm/Makefile.pre.in
+--- host-src/Makefile.pre.in	2016-12-23 11:21:21.000000000 +0900
++++ python-src_arm/Makefile.pre.in	2017-01-20 07:29:33.327508353 +0900
+@@ -142,7 +142,7 @@
+ 
+ # Symbols used for using shared libraries
+ SHLIB_SUFFIX=	@SHLIB_SUFFIX@
+-EXT_SUFFIX=	@EXT_SUFFIX@
++export EXT_SUFFIX=@EXT_SUFFIX@
+ LDSHARED=	@LDSHARED@ $(PY_LDFLAGS)
+ BLDSHARED=	@BLDSHARED@ $(PY_LDFLAGS)
+ LDCXXSHARED=	@LDCXXSHARED@
+@@ -229,9 +229,9 @@
+ 
+ PYTHON_FOR_GEN=@PYTHON_FOR_GEN@
+ PYTHON_FOR_BUILD=@PYTHON_FOR_BUILD@
+-_PYTHON_HOST_PLATFORM=@_PYTHON_HOST_PLATFORM@
++export _PYTHON_HOST_PLATFORM=@_PYTHON_HOST_PLATFORM@
+ BUILD_GNU_TYPE=	@build@
+-HOST_GNU_TYPE=	@host@
++export HOST_GNU_TYPE=	@host@
+ 
+ # Tcl and Tk config info from --with-tcltk-includes and -libs options
+ TCLTK_INCLUDES=	@TCLTK_INCLUDES@
+@@ -1431,6 +1436,7 @@
+ # Install the dynamically loadable modules
+ # This goes into $(exec_prefix)
+ sharedinstall: sharedmods
++	CC='$(CC)' LDSHARED='$(BLDSHARED)' LDFLAGS='$(LDFLAGS)' OPT='$(OPT)' CROSS_COMPILE='$(CROSS_COMPILE)' \
+ 	$(RUNSHARED) $(PYTHON_FOR_BUILD) $(srcdir)/setup.py install \
+ 	   	--prefix=$(prefix) \
+ 		--install-scripts=$(BINDIR) \

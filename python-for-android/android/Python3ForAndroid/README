@@ -1,0 +1,26 @@
+# Python 3 Interpreter For Android
+
+In order to build this project first you need to gradle build other projects,
+see settings.gradle:
+
+    Utils
+    Common
+    InterpreterForAndroid
+
+The Python3 build is still very incoherent.
+
+
+# setup
+
+1. edit local.properties to specify Android SDK.
+
+    `sdk.dir=/home/shinji/install/android-sdk`
+
+2. You also need to build ../python3-alpha by running
+
+    `NDK_PATH=/where/to/android-ndk make build`
+
+    in that folder.
+
+3. And then running python3.sh once it ended the build process.
+
